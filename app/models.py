@@ -11,7 +11,26 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
 
+books_authors = db.Table('books_authors',
+    db.Column('book_id', db.Integer, db.ForeignKey('book.id'), primary_key=True),
+    db.Column('author_id', db.Integer, db.ForeignKey('author.id'), primary_key=True)
+)
+
+class Book(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(250), unique=True, nullable=False)
+    authors = db.relationship('Author', secondary=books_authors, lazy='subquery',
+        backref=db.backref('books', lazy=True))
+
+    def __repr__(self):
+        return f'<Book {self.title}>'
 
 
+class Author(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(250), unique=True, nullable=False)
 
-db.create_all()
+    def __repr__(self):
+        return f'<Author{self.first_name}>'
+
+# db.create_all()
