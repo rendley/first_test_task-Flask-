@@ -11,6 +11,7 @@ class User(db.Model):
     def __repr__(self):
         return f'<User {self.username}>'
 
+
 books_authors = db.Table('books_authors',
     db.Column('book_id', db.Integer, db.ForeignKey('book.id'), primary_key=True),
     db.Column('author_id', db.Integer, db.ForeignKey('author.id'), primary_key=True)
