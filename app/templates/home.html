@@ -1,0 +1,79 @@
+{%  extends "base.html" %}
+
+
+
+
+
+
+
+
+{%  block content %}
+{% include "_messages.html" %}
+<div class="container">
+    <div class="row">
+
+
+        {% for book in books %}
+
+        <div class="col-4 mt-3">
+            <div class="card text-center" style="width: 20rem;">
+
+                <div class="card-body">
+                    <p class="card-text">Книга</p>
+                    <h5 class="text-center">{{ book.title }}</h5>
+                    <p class="text-center">автор</p>
+                </div>
+                <div class="card-footer">
+                    <a href="{{url_for('update_book', id=book.id)}}"
+                        class="float-left btn btn-sm btn-outline-info">Edit</a>
+
+                    <button type="button" class="float-right btn btn-outline-danger btn-sm" data-toggle="modal"
+                        data-target="#exampleModal-{{ book.id }}">
+                        Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal-{{ book.id }}" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">{{ book.title }}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <span class="text-danger">Вы уверены что хотите удалить книгу "{{ book.title }}"</span>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-info btn-sm" data-dismiss="modal">Отмена</button>
+
+                        <form action="{{ url_for('delete_book', id=book.id )}}" method="POST">
+
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Удалить</button>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+{%  endblock %}
