@@ -9,6 +9,7 @@
         <div class="col-md-3"></div>
         <div class="col-md-6">
 
+            {% if books %}
 
                 <h1 class="text-center p-2 mt-5">Изменение книги</h1>
                 {% include "_messages.html" %} 
@@ -21,6 +22,20 @@
                 </form>
                 <a href="#" class="btn btn-outline-info" style="margin-top: -65px; margin-left: 470px; ">Назад</a>
 
+            {% else %}
+
+                <h1 class="text-center p-2 mt-5">Изменение автора</h1>
+                {% include "_messages.html" %} 
+                {% from "_formhelpers.html" import render_field %}
+                <form action="{{ url_for('update_author', id=author.id) }}" method='POST'>
+                    
+                    {{ render_field(form.first_name, class="form-control") }}
+
+                    <input type="submit" value="Изменить Автора"  class="btn btn-outline-info mt-3" >
+                </form>
+                <a href="#" class="btn btn-outline-info" style="margin-top: -65px; margin-left: 470px; ">Назад</a>
+
+            {% endif %}
 
                 
 

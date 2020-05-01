@@ -12,6 +12,13 @@ def home():
     return render_template("home.html", books=books)
 
 
+@app.route("/book")
+def book():
+    # books = Book.query.order_by(Book.id.desk()).all() # поо дате дате добавления но нужно datetime в модель
+    books = Book.query.all()
+    return render_template("book_and_author.html", books=books, title="Список книг")
+
+
 @app.route("/createbook", methods=["POST", "GET"])
 def create_book():
     form = AddBook(request.form)
@@ -34,7 +41,7 @@ def update_book(id):
         form.populate_obj(book)   
         db.session.commit()
         flash(f'Вы успешно изменили книгу', 'success')
-        return redirect(url_for("home"))
+        return redirect(url_for("book"))
     form = AddBook(obj=book)
     return render_template("edit_book_and_author.html", form=form, book=book, books="books")
 
@@ -46,7 +53,7 @@ def delete_book(id):
         db.session.delete(book)
         flash(f'Вы успешно удалили книгу', 'success')
         db.session.commit()
-        return redirect(url_for("home"))
+        return redirect(url_for("book"))
     flash(f'Не удалось удалить книгу', 'danger')
     return redirect(url_for("home"))
 
