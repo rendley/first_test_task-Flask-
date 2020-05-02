@@ -1,79 +1,72 @@
 {%  extends "base.html" %}
 
 
-
-
-
-
-
-
 {%  block content %}
 {% include "_messages.html" %}
 <div class="container">
     <div class="row">
 
+        {% for book in pages.items %}
 
-        {% for book in books %}
-
-        <div class="col-4 mt-3">
-            <div class="card text-center" style="width: 20rem; height: 20rem;">
-
-                <div class="card-body">
-                    <p class="card-text">Книга</p>
-                    <h5 class="text-center">{{ book.title }}</h5>
-                    <p class="text-center">автор</p>
-                </div>
-                <div class="card-footer">
-                    <a href="{{url_for('update_book', id=book.id)}}"
-                        class="float-left btn btn-sm btn-outline-info">Edit</a>
-
-                    <button type="button" class="float-right btn btn-outline-danger btn-sm" data-toggle="modal"
-                        data-target="#exampleModal-{{ book.id }}">
-                        Delete
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal-{{ book.id }}" tabindex="-1" role="dialog"
-            aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">{{ book.title }}</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
+            <div class="col-4 mt-3">
+                <div class="card text-center" style="width: 20rem; height: 20rem;">
+                    <div class="card-body">
+                        <p class="card-text">Book</p>
+                        <h5 class="text-center">{{ book.title }}</h5>               
+                        <p class="text-center"></p>          
                     </div>
-                    <div class="modal-body">
-                        <span class="text-danger">Вы уверены что хотите удалить книгу "{{ book.title }}"</span>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-outline-info btn-sm" data-dismiss="modal">Отмена</button>
 
-                        <form action="{{ url_for('delete_book', id=book.id )}}" method="POST">
-
-                            <button type="submit" class="btn btn-outline-danger btn-sm">Удалить</button>
-                        </form>
-
+                    <div>
+                        <button type="button" class="btn btn-sm btn-outline-info mb-3">{{book.authors[0]}}</button>
+                </div>
+                    
+                    <div class="card-footer">
+                        <a href="{{url_for('update_book', id=book.id)}}"
+                            class="float-center btn btn-sm btn-outline-info" style="width: 20em;">Edit</a>
                     </div>
                 </div>
             </div>
-        </div>
 
         {% endfor %}
 
+        <div class="container">
+            <div class="row">
+                <div class="col-4 mt-5"></div>
+                    <div class="col-4 mt-5">
+                        <nav >
+                            <ul class="pagination">
 
+                                {% if not pages.has_prev %}
+                                    <li  class="page-item disabled" >
+                                {% endif %}                              
+                                        <a class="page-link" href="./?page={{ pages.prev_num }}" tabindex="-1">Previous</a>
+                                    </li>
+
+                                {% for page in pages.iter_pages() %}
+                
+                                {% if page==pages.page %}
+                                    <li class="page-item active">
+                                {% endif %}
+                                    <a class="page-link" href="./?page={{ page }}">{{ page }}<span class="sr-only">(current)</span></a>
+                                    </li>
+                                    
+                                {% endfor %}  
+
+
+                                {% if not pages.has_next %}
+                                    <li  class="page-item disabled" >
+                                {% endif %}                              
+                                        <a class="page-link" href="./?page={{ pages.next_num }}" >Next</a>
+                                    </li>
+
+                            </ul>
+                        </nav>
+                    </div>
+                <div class="col-4 mt-5"></div>
+            </div>       
+        </div>
     </div>
-
 </div>
-
-
-
-
-
-
 
 
 {%  endblock %}

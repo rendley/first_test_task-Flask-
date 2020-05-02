@@ -32,6 +32,6 @@ class Author(db.Model):
     first_name = db.Column(db.String(250), unique=True, nullable=False)
 
     def __repr__(self):
-        return f'<Author{self.first_name}>'
+        return f'{self.first_name}'
 
 # db.create_all()

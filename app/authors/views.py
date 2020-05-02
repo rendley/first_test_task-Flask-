@@ -4,13 +4,11 @@ from app.authors.forms import AddAuthor
 from app.models import Author
 
 
-
-
 @app.route("/author")
 def author():
     # books = Book.query.order_by(Book.id.desk()).all() # поо дате дате добавления но нужно datetime в модель
     authors = Author.query.all()
-    return render_template("book_and_author.html", authors=authors, title="Список Авторов")
+    return render_template("view_book_and_author.html", authors=authors, title="Список Авторов")
 
 @app.route("/createauthor", methods=["POST", "GET"])
 def create_author():

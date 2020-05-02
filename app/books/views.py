@@ -5,18 +5,28 @@ from app.models import Book, Author
 
 
 
-@app.route("/home")
+@app.route("/home/")
 def home():
-    # books = Book.query.order_by(Book.id.desk()).all() # поо дате дате добавления но нужно datetime в модель
-    books = Book.query.all()
-    return render_template("home.html", books=books)
+    q = request.args.get("q") # search
+    page = request.args.get("page") # pagination
+    if page and page.isdigit():
+        page = int(page)
+    else:
+        page = 1
+    if q:
+        books = Book.query.filter(Book.title.contains(q))#.all()
+    else:
+        # books = Book.query.order_by(Book.id.desk()).all() # поо дате дате добавления но нужно datetime в модель
+        books = Book.query#.all()
+    pages = books.paginate(page=page, per_page=15)
+    return render_template("home.html", books=books, pages=pages)
 
 
 @app.route("/book")
 def book():
     # books = Book.query.order_by(Book.id.desk()).all() # поо дате дате добавления но нужно datetime в модель
     books = Book.query.all()
-    return render_template("book_and_author.html", books=books, title="Список книг")
+    return render_template("view_book_and_author.html", books=books, title="Список книг")
 
 
 @app.route("/createbook", methods=["POST", "GET"])

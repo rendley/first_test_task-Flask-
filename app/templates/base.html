@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
 
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -18,14 +18,7 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="{{url_for('home')}}">Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Admin</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Disabled</a>
-                </li>
-                <li class="nav-item">
+                 <li class="nav-item">
                     <a class="nav-link" href="{{url_for('create_author')}}">Add Author</a>
                 </li>
                 <li class="nav-item">
@@ -39,16 +32,18 @@
                 </li>
 
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0" method="GET">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" 
+                aria-label="Search" name="q", value="{{ request.args.get('q', '') }}">
+
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
             <ul class="navbar-nav mr-rigth">
             <li class="nav-item">
-                <a class="nav-link" href="{{url_for('login')}}">Вход</a>
+                <a class="nav-link" href="{{url_for('login')}}">Login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{url_for('register')}}">Регистрация</a>
+                <a class="nav-link" href="{{url_for('register')}}">Registration</a>
             </li>
         </ul>
         </div>
@@ -62,8 +57,6 @@
     {% block content %}
 
     {% endblock %}
-
-
 
     <script src="{{url_for('static', filename='js/jquery-3.4.1.slim.min.js')}}"></script>
     <script src="{{url_for('static', filename='js/popper.min.js')}}"></script>

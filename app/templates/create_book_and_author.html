@@ -11,29 +11,29 @@
 
             {% if book %}
 
-                <h1 class="text-center p-2 mt-5">Добавление книги</h1>
+                <h1 class="text-center p-2 mt-5">Add book</h1>
                 {% include "_messages.html" %} 
                 {% from "_formhelpers.html" import render_field %}
                 <form method=POST>
                     {{ render_field(form.title, class="form-control") }}
 
                     <!-- <input type="text" name="book" class="form-control" id=""> -->
-                    <input type="submit" value="Добавить книгу" class="btn btn-outline-info mt-3" >
+                    <input type="submit" value="Add book" class="btn btn-outline-info mt-3" >
                 </form>
                 <a href="#" class="btn btn-outline-info" style="margin-top: -65px; margin-left: 470px; ">Назад</a>
 
                 {% else %}
 
-                <h1 class="text-center p-2 mt-5">Добавление автора</h1>
+                <h1 class="text-center p-2 mt-5">Add author</h1>
                 {% include "_messages.html" %} 
                 {% from "_formhelpers.html" import render_field %}
                 <form method=POST>
                     {{ render_field(form.first_name, class="form-control") }}
 
                     <!-- <input type="text" name="book" class="form-control" id=""> -->
-                    <input type="submit" value="Добавить автора" class="btn btn-outline-info mt-3" >
+                    <input type="submit" value="Add author" class="btn btn-outline-info mt-3" >
                 </form>
-                <a href="#" class="btn btn-outline-info" style="margin-top: -65px; margin-left: 470px; ">Назад</a>
+                <a href="#" class="btn btn-outline-info" style="margin-top: -65px; margin-left: 470px; ">Back</a>
               
                {% endif %} 
 
