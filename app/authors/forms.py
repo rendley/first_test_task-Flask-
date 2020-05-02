@@ -3,11 +3,11 @@ from app.models import Author
 
 
 class AddAuthor(Form):
-    first_name = StringField("Имя Автора", [validators.DataRequired()])
+    first_name = StringField("Name author", [validators.DataRequired()])
 
     def validate_first_name(self, first_name):
         author_count = Author.query.filter_by(first_name=first_name.data).count()
         if author_count > 0:
-            raise ValidationError("Введенный вами автор уже существует")
+            raise ValidationError("Введенный вами автор уже существует!")
 
         

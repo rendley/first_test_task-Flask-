@@ -1,35 +1,37 @@
 from flask import flash, redirect, render_template, request, url_for, current_app
 from app import db, app
 from app.books.forms import AddBook
-from app.models import Book, Author
+from app.models import Book, Author, User
+
+from flask_login import login_required
 
 
 
 @app.route("/home/")
 def home():
-    q = request.args.get("q") # search
-    page = request.args.get("page") # pagination
+    q = request.args.get("q")
+    page = request.args.get("page")
     if page and page.isdigit():
         page = int(page)
     else:
         page = 1
     if q:
-        books = Book.query.filter(Book.title.contains(q))#.all()
+        books = Book.query.filter(Book.title.contains(q))
     else:
-        # books = Book.query.order_by(Book.id.desk()).all() # поо дате дате добавления но нужно datetime в модель
-        books = Book.query#.all()
+        books = Book.query
     pages = books.paginate(page=page, per_page=15)
     return render_template("home.html", books=books, pages=pages)
 
 
 @app.route("/book")
+@login_required
 def book():
-    # books = Book.query.order_by(Book.id.desk()).all() # поо дате дате добавления но нужно datetime в модель
     books = Book.query.all()
     return render_template("view_book_and_author.html", books=books, title="Список книг")
 
 
 @app.route("/createbook", methods=["POST", "GET"])
+@login_required
 def create_book():
     form = AddBook(request.form)
     if request.method == 'POST' and form.validate():
@@ -42,10 +44,9 @@ def create_book():
 
 
 @app.route("/updatebook/<int:id>", methods=["POST", "GET"])
+@login_required
 def update_book(id):
-    print("hello")
-    book = Book.query.get_or_404(id)   
-    # book = Book.query.filter(Book.id==id).first()    
+    book = Book.query.get_or_404(id)      
     if request.method == 'POST': 
         form = AddBook(formdata=request.form, obj=book)
         form.populate_obj(book)   
@@ -57,6 +58,7 @@ def update_book(id):
 
 
 @app.route("/deletebook/<int:id>", methods=["POST", "GET"])
+@login_required
 def delete_book(id):
     book = Book.query.get_or_404(id)
     if request.method == "POST":

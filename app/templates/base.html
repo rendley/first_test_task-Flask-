@@ -32,20 +32,35 @@
                 </li>
 
             </ul>
-            <form class="form-inline my-2 my-lg-0" method="GET">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" 
-                aria-label="Search" name="q", value="{{ request.args.get('q', '') }}">
 
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+                <form class="form-inline my-2 my-lg-0" method="GET">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search" 
+                    aria-label="Search" name="q", value="{{ request.args.get('q', '') }}">
+
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
             <ul class="navbar-nav mr-rigth">
-            <li class="nav-item">
-                <a class="nav-link" href="{{url_for('login')}}">Login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{url_for('register')}}">Registration</a>
-            </li>
-        </ul>
+                {% if current_user.is_authenticated %}
+
+                    <li class="nav-item">
+                        <span class="nav-link"> Привет {{ current_user.username }} !</span>
+                    </li>
+
+                    <li class="nav-item"> 
+                        <a class="nav-link" href="{{url_for('logout')}}">Logout</a>                  
+                    </li>
+
+                {% else %}
+
+                    <li class="nav-item"> 
+                        <a class="nav-link" href="{{url_for('login')}}">Login</a>                  
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{url_for('register')}}">Registration</a>
+                    </li>
+
+                {% endif%}
+             </ul>
         </div>
     </nav>
 
